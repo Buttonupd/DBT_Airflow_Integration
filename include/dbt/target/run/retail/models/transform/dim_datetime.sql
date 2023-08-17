@@ -3,7 +3,6 @@
     
 
     create or replace table `source-datasets`.`retail`.`dim_datetime`
-      
     
     
 

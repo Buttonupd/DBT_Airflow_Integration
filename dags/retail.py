@@ -62,8 +62,8 @@ def retail():
     def check_load(scan_name='check_load',check_subpath='sources'):
         from include.soda.check_function import check
         return check(scan_name, check_subpath)
-    
-    
+    check_load()
+
     transform = DbtTaskGroup(
             group_id='transform',
             project_config=DBT_PROJECT_CONFIG,
@@ -73,7 +73,12 @@ def retail():
                 select=['path:models/transform']
             )
         )
-    
+    @task.external_python(python='/usr/local/airflow/soda_venv/bin/python')
+    def check_transform(scan_name='check_transform',check_subpath='transform'):
+        from include.soda.check_function import check
+        return check(scan_name, check_subpath)
+    check_transform()
+
     report = DbtTaskGroup(
         group_id='report',
         project_config=DBT_PROJECT_CONFIG,
@@ -83,14 +88,11 @@ def retail():
             select=['path:models/report']
         )
     )
-    
     @task.external_python(python='/usr/local/airflow/soda_venv/bin/python')
-    def check_transform(scan_name='check_transform',check_subpath='transform'):
+    def check_report(scan_name='check_report',check_subpath='reports'):
         from include.soda.check_function import check
         return check(scan_name, check_subpath)
-    
-    check_load()
-    check_transform()
+    check_report()
 
 retail()
 
