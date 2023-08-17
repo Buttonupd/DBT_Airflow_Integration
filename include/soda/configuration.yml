@@ -9,6 +9,4 @@ data_source retail:
     project_id: 'source-datasets'
     dataset: retail
 soda_cloud:
-  host: cloud.soda.io
-  api_key_id: "your soda instance api key id"
-  api_key_secret: your soda api key secret
+"Your Soda instance configuration file"

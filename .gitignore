@@ -5,3 +5,5 @@ airflow_settings.yaml
 __pycache__/
 astro
 airflowenv/
+logs/
+dbt_packages

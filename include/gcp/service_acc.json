@@ -1,4 +1,1 @@
-{
-  "Your_service_account_file_goes_here":"Json"
- 
-}
+{"Conf":"Your GCP Service account conf file"}
