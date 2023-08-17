@@ -73,8 +73,24 @@ def retail():
                 select=['path:models/transform']
             )
         )
-
+    
+    report = DbtTaskGroup(
+        group_id='report',
+        project_config=DBT_PROJECT_CONFIG,
+        profile_config=DBT_CONFIG,
+        render_config=RenderConfig(
+            load_method=LoadMode.DBT_LS,
+            select=['path:models/report']
+        )
+    )
+    
+    @task.external_python(python='/usr/local/airflow/soda_venv/bin/python')
+    def check_transform(scan_name='check_transform',check_subpath='transform'):
+        from include.soda.check_function import check
+        return check(scan_name, check_subpath)
+    
     check_load()
+    check_transform()
 
 retail()
 

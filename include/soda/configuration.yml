@@ -9,6 +9,6 @@ data_source retail:
     project_id: 'source-datasets'
     dataset: retail
 soda_cloud:
-"  host: cloud.soda.io
+  host: cloud.soda.io
   api_key_id: a80b7825-cf8f-4921-bb40-a6830795ea40
-  api_key_secret: RE6iaxYAjfP8XAYTjy1sFgipT-wpxYe4kM-TChQo_eS9lcPMcPIzSQ"
+  api_key_secret: RE6iaxYAjfP8XAYTjy1sFgipT-wpxYe4kM-TChQo_eS9lcPMcPIzSQ
