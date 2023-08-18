@@ -3,6 +3,7 @@
     
 
     create or replace table `source-datasets`.`retail`.`report_customer_invoices`
+      
     
     
 

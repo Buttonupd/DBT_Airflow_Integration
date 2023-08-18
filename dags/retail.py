@@ -10,6 +10,7 @@ from include.dbt.cosmos_config import DBT_PROJECT_CONFIG, DBT_CONFIG
 from cosmos.airflow.task_group import DbtTaskGroup
 from cosmos.constants import LoadMode
 from cosmos.config import ProjectConfig, RenderConfig
+from airflow.models.baseoperator import chain
 
 import pandas as pd
 
@@ -22,6 +23,7 @@ import pandas as pd
 
 def retail():
 
+    #
     upload_csv_to_gcs = LocalFilesystemToGCSOperator(
         task_id='upload_csv_to_gcs',
         src='/usr/local/airflow/include/dataset/Online_Retail.csv',
@@ -62,7 +64,7 @@ def retail():
     def check_load(scan_name='check_load',check_subpath='sources'):
         from include.soda.check_function import check
         return check(scan_name, check_subpath)
-    check_load()
+
 
     transform = DbtTaskGroup(
             group_id='transform',
@@ -77,7 +79,7 @@ def retail():
     def check_transform(scan_name='check_transform',check_subpath='transform'):
         from include.soda.check_function import check
         return check(scan_name, check_subpath)
-    check_transform()
+
 
     report = DbtTaskGroup(
         group_id='report',
@@ -92,7 +94,17 @@ def retail():
     def check_report(scan_name='check_report',check_subpath='reports'):
         from include.soda.check_function import check
         return check(scan_name, check_subpath)
-    check_report()
+    
+    chain(
+        upload_csv_to_gcs,
+        create_retail_dataset,
+        gcs_to_raw,
+        check_load(),
+        transform,
+        check_transform(),
+        report,
+        check_report()
+    )
 
 retail()
 
