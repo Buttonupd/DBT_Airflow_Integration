@@ -7,3 +7,5 @@ astro
 airflowenv/
 logs/
 dbt_packages
+include/gcp/
+include/soda/

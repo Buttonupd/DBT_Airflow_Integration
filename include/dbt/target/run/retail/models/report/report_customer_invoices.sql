@@ -19,6 +19,6 @@ FROM `source-datasets`.`retail`.`fct_invoices` fi
 JOIN `source-datasets`.`retail`.`dim_customer` c ON fi.customer_id = c.customer_id
 GROUP BY c.country, c.iso
 ORDER BY total_revenue DESC
-LIMIT 10
+LIMIT 100
     );
   
